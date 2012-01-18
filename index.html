@@ -1,0 +1,58 @@
+<html>
+<head>
+  <title>Knockout</title>
+
+  <meta charset="utf-8">
+
+  <script type='text/javascript' src='javascripts/knockout.js'></script>
+
+  <script type='text/javascript' src='javascripts/viewmodels/todo_list.js'></script>
+  <script type='text/javascript' src='javascripts/models/todo_item.js'></script>
+
+  <link type="text/css" rel="stylesheet" media="all" href="stylesheets/style.css" />
+
+  <!-- Template -->
+  <script id="todo-item" type="text/html">
+    <li>
+      <section data-bind="visible: !isEditing()">
+        <input type="checkbox" data-bind="checked: isFinished" />
+        <span data-bind="text: text, event: { dblclick: doubleClickHandler }, css: { finished: isFinished() }"></span>
+        <span class="remove" data-bind="click: todoListViewModel.removeTodoItem">&#x2718</span>
+      </section>
+      <section data-bind="visible: isEditing()">
+        <input type="text" data-bind="value: text, event: { keyup: keyUpHandler }, hasfocus: isEditing()" />
+        <input type="button" value="Save" data-bind="click: clickHandler" />
+      </section>
+    </li>
+  </script>
+</head>
+<body>
+  <h1>Knockout</h1>
+
+  <section>
+    <h2>Create a new Todo item:</h2>
+    <input type="text" data-bind="value: inputText, event: { keyup: keyUpHandler }" />
+    <input type="button" value="Add" data-bind="click: clickHandler" />
+  </section>
+
+  <section>
+    <h2>Your Todo list:</h2>
+    <ul data-bind="template: { name: 'todo-item', foreach: todoItems }">
+    </ul>
+  </section>
+
+  <script type='text/javascript'>
+    ko.applyBindings(todoListViewModel);
+
+    /*var t = new Date().getTime();
+
+    for (var i = 0; i < 5000; i++) {
+      todoListViewModel.todoItems.push(new todoItemModel("Test"));
+    }
+
+    window.onload = function() {
+      console.log("Time:", new Date().getTime() - t);
+    };*/
+  </script>
+</body>
+</html>
