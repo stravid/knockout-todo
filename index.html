@@ -11,16 +11,23 @@
 
   <link type="text/css" rel="stylesheet" media="all" href="stylesheets/style.css" />
 
-  <!-- Template -->
+  <!-- Template for a single todo item -->
   <script id="todo-item" type="text/html">
     <li>
+      <!-- Display this section if the todo item is not in editing mode -->
       <section data-bind="visible: !isEditing()">
+        <!-- Mark the checkbox as checked if the todo item is finished. -->
         <input type="checkbox" data-bind="checked: isFinished" />
+        <!-- Display the todo items text. Bind the doubleClickHandler method to the dblclick event. Add the CSS class finished if the todo item is marked as finished -->
         <span data-bind="text: text, event: { dblclick: doubleClickHandler }, css: { finished: isFinished() }"></span>
+        <!-- Bind the removeTodoItem method of the View Model to the click event -->
         <span class="remove" data-bind="click: todoListViewModel.removeTodoItem">&#x2718</span>
       </section>
+      <!-- Display this section if the todo item is in editing mode -->
       <section data-bind="visible: isEditing()">
+        <!-- Display the todo item text. Bind the keyUpHandler to the keyup event. Give the input field focus if the todo item is in editing mode. -->
         <input type="text" data-bind="value: text, event: { keyup: keyUpHandler }, hasfocus: isEditing()" />
+        <!-- Bind the clickHandler method to the click event. -->
         <input type="button" value="Save" data-bind="click: clickHandler" />
       </section>
     </li>
@@ -29,12 +36,14 @@
 <body>
   <h1>Knockout</h1>
 
+  <!-- Input elements for creating a new todo item -->
   <section>
     <h2>Create a new Todo item:</h2>
     <input type="text" data-bind="value: inputText, event: { keyup: keyUpHandler }" />
     <input type="button" value="Add" data-bind="click: clickHandler" />
   </section>
 
+  <!-- List of todo items -->
   <section>
     <h2>Your Todo list:</h2>
     <ul data-bind="template: { name: 'todo-item', foreach: todoItems }">
@@ -42,17 +51,8 @@
   </section>
 
   <script type='text/javascript'>
+    // Activate Knockout
     ko.applyBindings(todoListViewModel);
-
-    /*var t = new Date().getTime();
-
-    for (var i = 0; i < 5000; i++) {
-      todoListViewModel.todoItems.push(new todoItemModel("Test"));
-    }
-
-    window.onload = function() {
-      console.log("Time:", new Date().getTime() - t);
-    };*/
   </script>
 </body>
 </html>
